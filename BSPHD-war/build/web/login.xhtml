@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--somehow it works 6:25pm, just cannot refresh, nothing else changes rather than this-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/template.xhtml">
+        <div class="container">
+        <ui:define name="title">
+            <h:outputText value="Login"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            
+            <h:form id="login" prependId="false"
+                    onsubmit="document.getElementById('login').action='j_security_check';">
+                
+                <!--Once submit j_security_check will be immediately invoked, so the following validations will not be shown to users-->
+                <div class="form-group row #{!name.valid ? 'has-error' : 'none'}">
+                            <h:outputLabel for="j_username" class="col-md-2 control-label" value="User ID" />
+                            <div class="col-md-4">
+                                <h:inputText id="j_username" 
+                                             class="form-control"
+                                             label="User ID" size="32" value="#{userController.userName}" binding="#{name}" required="true" 
+                                             requiredMessage="Please enter your user ID."
+                                             validatorMessage="Please enter a value greater than 1"
+                                             converterMessage="Please enter a number">
+                                    <f:convertNumber integerOnly="true"/>
+                                    <f:validateLongRange minimum="1" /> 
+                                </h:inputText> 
+                                <h:message for="j_username" class="#{!name.valid ? 'label label-warning' : 'none'}" />
+                            </div>
+                        </div>
+                <div class="form-group row #{!pwd.valid ? 'has-error' : 'none'}">
+                            <h:outputLabel for="j_password" class="col-md-2 control-label" value="Password" />
+                            <div class="col-md-4">
+                                <h:inputSecret id="j_password" 
+                                             class="form-control"
+                                             label="Password" size="32" value="#{userController.password}" binding="#{pwd}" required="true" requiredMessage="Please enter your password!"></h:inputSecret> 
+                                <h:message for="j_password" class="#{!pwd.valid ? 'label label-warning' : 'none'}" />
+                            </div>
+                        </div>
+                <div class="form-group row">
+                            <div class="col-md-3 col-lg-offset-2">
+                                <input type="submit" value="Submit"/>
+                            </div>
+                        </div>
+            </h:form>
+            
+                <br />
+                <br />
+        </ui:define>
+        </div>
+    </ui:composition>
+
+
+</html>

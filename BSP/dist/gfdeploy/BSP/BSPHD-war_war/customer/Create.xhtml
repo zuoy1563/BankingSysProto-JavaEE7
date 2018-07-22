@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateCustomerTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages rendered="#{customerController.isSuccess}" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <div class="form-group row #{!firstname.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.CreateCustomerLabel_firstname}" class="col-md-2 control-label" for="firstname" />
+                    <div class="col-md-3">
+                        <h:inputText id="firstname" value="#{customerController.firstname}" class="form-control" title="#{bundle.CreateCustomerTitle_firstname}" 
+                                     binding="#{firstname}" required="true" requiredMessage="Please enter your first name."
+                                     validatorMessage="Please enter characters only">
+                        <f:validateRegex pattern="[a-z]+"/>
+                        </h:inputText>
+                        <h:message for="firstname" class="#{!firstname.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!lastname.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.CreateCustomerLabel_lastname}" class="col-md-2 control-label" for="lastname" />
+                    <div class="col-md-3">
+                        <h:inputText id="lastname" value="#{customerController.lastname}" class="form-control" title="#{bundle.CreateCustomerTitle_lastname}" 
+                                     binding="#{lastname}" required="true" requiredMessage="Please enter your last name."
+                                     validatorMessage="Please enter characters only">
+                        <f:validateRegex pattern="[a-z]+"/>
+                        </h:inputText>
+                        <h:message for="lastname" class="#{!lastname.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!phoneNumber.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.CreateCustomerLabel_phoneNumber}" class="col-md-2 control-label" for="phoneNumber" />
+                    <div class="col-md-3">
+                        <h:inputText id="phoneNumber" value="#{customerController.phoneNumber}" class="form-control" title="#{bundle.CreateCustomerTitle_phoneNumber}" 
+                                     binding="#{phoneNumber}" required="true" requiredMessage="Please enter your phone number." validatorMessage="Please enter valid phone number!">
+                            <!-- change here for changing the regex for phone number-->
+                            <f:validateRegex pattern="(^[0]{1}[0-9]{9}$|^[9]{1}[0-9]{7}$)"/>
+                        </h:inputText>
+                        <h:message for="phoneNumber" class="#{!phoneNumber.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!email.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.CreateCustomerLabel_email}" class="col-md-2 control-label" for="email" />
+                    <div class="col-md-3">
+                        <h:inputText id="email" value="#{customerController.email}" class="form-control" title="#{bundle.CreateCustomerTitle_email}" 
+                                     binding="#{email}" required="true" requiredMessage="Please enter your email." 
+                                     validatorMessage="Please enter a valid email">
+                            <!-- change here for changing the regex for email-->
+                            <f:validateRegex pattern="^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+" />
+                        </h:inputText>
+                        <h:message for="email" class="#{!email.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!password.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.CreateCustomerLabel_password}" class="col-md-2 control-label" for="password" />
+                    <div class="col-md-3">
+                        <h:inputText id="password" value="#{customerController.password}" class="form-control" title="#{bundle.CreateCustomerTitle_password}" 
+                                     binding="#{password}" required="true" requiredMessage="Please enter your password." validatorMessage="Please enter at least 6 characters">
+                            <f:validateRegex pattern="^[a-zA-Z0-9]{6,}" />
+                        </h:inputText>
+                        <h:message for="password" class="#{!password.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <h:outputLabel value="#{bundle.CreateCustomerLabel_type}" class="col-md-2 control-label" for="type" />
+                    <div class="col-md-3">
+                        <h:selectOneListbox id="type" value="#{customerController.type}" size="1" class="form-control">
+                            <f:selectItems value="#{customerController.types}"/>
+                        </h:selectOneListbox>
+                    </div>
+                </div>
+                <div class="form-group row #{!streetNo.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_streetNo}" class="col-md-2 control-label" for="streetNo" />
+                    <div class="col-md-3">
+                        <h:inputText id="streetNo" value="#{customerController.streetNoStr}" class="form-control" title="#{bundle.EditCustomerTitle_streetNo}"
+                                     binding="#{streetNo}" required="true" 
+                                     requiredMessage="Please enter your street number." 
+                                     validatorMessage="Please enter a number greater than 1"
+                                     converterMessage="Please enter a number">
+                                    <f:convertNumber integerOnly="true"/>
+                                    <f:validateLongRange minimum="1" /> 
+                        </h:inputText>
+                        <h:message for="streetNo" class="#{!streetNo.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!streetAdd.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_streetAddress}" class="col-md-2 control-label" for="streetAdd" />
+                    <div class="col-md-3">
+                        <h:inputText id="streetAdd" value="#{customerController.streetAddress}" class="form-control" title="#{bundle.EditCustomerTitle_streetAddress}" 
+                                 binding="#{streetAdd}" required="true" requiredMessage="Please enter your street address." />
+                        <h:message for="streetAdd" class="#{!streetAdd.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!suburb.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_suburb}" class="col-md-2 control-label" for="suburb" />
+                    <div class="col-md-3">
+                        <h:inputText id="suburb" value="#{customerController.suburb}" class="form-control" title="#{bundle.EditCustomerTitle_suburb}" 
+                                     binding="#{suburb}" required="true" requiredMessage="Please enter your suburb."/>
+                        <h:message for="suburb" class="#{!suburb.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!state.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_state}" class="col-md-2 control-label" for="state" />
+                    <div class="col-md-3">
+                        <h:inputText id="state" value="#{customerController.state}" class="form-control" title="#{bundle.EditCustomerTitle_state}" 
+                                     binding="#{state}" required="true" requiredMessage="Please enter your state."/>
+                        <h:message for="state" class="#{!state.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!postcode.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_postcode}" class="col-md-2 control-label" for="postcode" />
+                    <div class="col-md-3">
+                        <h:inputText id="postcode" value="#{customerController.postcodeStr}" class="form-control" title="#{bundle.EditCustomerTitle_postcode}" 
+                                     binding="#{postcode}" required="true" requiredMessage="Please enter your postcode."
+                                     validatorMessage="Please enter a number greater than 1"
+                                     converterMessage="Please enter a number">
+                                    <f:convertNumber integerOnly="true"/>
+                                    <f:validateLongRange minimum="1" />
+                        </h:inputText>
+                        <h:message for="postcode" class="#{!postcode.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <br />
+                <h:commandLink action="#{customerController.create}" value="#{bundle.CreateCustomerSaveLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="#{customerController.prepareList}" value="#{bundle.CreateCustomerShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateCustomerIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

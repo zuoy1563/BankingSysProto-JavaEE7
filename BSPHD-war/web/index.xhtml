@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--somehow it works 6:25pm, just cannot refresh, nothing else changes rather than this-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/template.xhtml">
+        <div class="container">
+        <ui:define name="title">
+            <h:outputText value="Hello, welcome to Banking Prototype System (BSP)"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2" class="table table-striped">
+                    <h:outputText value="Author"/>
+                    <h:outputText value="Yue Zuo"/>
+                    <h:outputText value="Tutor"/>
+                    <h:outputText value="XiaoXiang Guan"/>
+                    <h:outputText value="Unit name"/>
+                    <h:outputText value="FIT5042 Enterprise Appilication Development for the Web"/>
+                    <h:outputText value="Semester"/>
+                    <h:outputText value="S2 2017"/>
+                    <h:outputText value="Task Level"/>
+                    <h:outputText value="High Distinction" />
+                </h:panelGrid>
+            </h:form>
+                <br />
+                <br />
+        </ui:define>
+        </div>
+    </ui:composition>
+
+
+</html>

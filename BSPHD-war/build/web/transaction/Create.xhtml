@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateTransactionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputLabel value="Sorry, please login first" rendered="${!userController.isLogin}" class="text-danger"/>
+            <c:set var="userType" scope="session" value="${userController.isLogin}"/>
+                <c:if test="${userType}">
+                    <h:outputLabel value="Sorry, only members of Public can create transactions" 
+                           rendered="${!userController.customer.type.equals(customerController.types[0])}" class="text-danger" />
+                </c:if>
+            <h:form rendered="${userController.customer.type.equals(customerController.types[0])}">
+                <div class="form-group row">
+                    <h:outputLabel value="Transaction type" class="col-md-2 control-label" for="type" />
+                    <div class="col-md-3">
+                        <h:selectOneListbox id="type" value="#{transactionController.selected.type}" size="1" class="form-control">
+                            <f:selectItems id="items" value="#{transactionController.transactionTypes}"/>
+                            <f:ajax execute="type items" event="change" render="account" listener="#{transactionController.listAvailableAccounts()}"/>
+                        </h:selectOneListbox>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <h:outputLabel value="Transfer in account" for="account" class="col-md-2 control-label"/>
+                    <div class="col-md-3">
+                        <h:selectOneMenu id="account" value="#{transactionController.selected.account.accountNo}" title="#{bundle.CreateTransactionTitle_account}" class="form-control">
+                            <f:selectItems value="#{transactionController.listAvailableAccounts()}"/>
+                            <f:ajax execute="account" render="balance"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <button class="btn btn-primary" id="aaa">Get Account Name</button>
+
+                </div>
+                <div>
+                
+                    <span id="before" onclick="#{webServiceBean.getNameWebservice(transactionController.selected.account.accountNo)}"></span>
+                    <span id="after" onclick="#{webServiceBean.getNameWebservice()}"><f:ajax event="click" render="accountName"/></span>
+                    <script>
+                        if (document.getElementById(aaa).onclick) {
+                            document.getElementById(before).click();
+                            document.getElementById(after).click();
+                        }
+                    </script>
+                    </div>
+                <div class="form-group row">
+                    <h:outputLabel value="Account Holder: " class="col-md-2 control-label" />
+                    <h:outputLabel id="accoutName" value="#{webServiceBean.name}" class="col-md-3"/>
+                </div>
+                <div class="form-group row">
+                    <h:outputLabel value="Current balance" class="col-md-2 control-label" />
+                    <h:outputLabel id="balance" value="${transactionController.selected.account.balance}" class="col-md-3"/>
+                </div>
+                <div class="form-group row #{!amount.valid ? 'has-error' : 'none'}">
+                        <h:outputLabel value="#{bundle.CreateTransactionLabel_amount}" class="col-md-2 control-label" for="amount" />
+                    <div class="col-md-3">
+                        <h:inputText id="amount" value="#{transactionController.selected.amount}" title="#{bundle.CreateTransactionTitle_amount}" 
+                                     binding="#{amount}" required="true" requiredMessage="Please enter transaction amount." 
+                                     validatorMessage="Please enter a number greater than 0" class="form-control">
+                            <f:validateDoubleRange minimum="0.00"/>
+                        </h:inputText>
+                        <h:message for="amount" class="#{!amount.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                <div class="form-group row #{!name.valid ? 'has-error' : 'none'}">
+                    <h:outputLabel value="Transaction Name" for="name" class="col-md-2 control-label"/>
+                    <div class="col-md-3">
+                        <h:inputText id="name" value="#{transactionController.selected.name}" title="#{bundle.CreateTransactionTitle_name}" class="form-control"
+                                 binding="#{name}" required="true" requiredMessage="Please enter transaction name."/>
+                        <h:message for="name" class="#{!name.valid ? 'label label-warning' : 'none'}" />
+                    </div>
+                </div>
+                    
+                
+                <br />
+                <h:commandLink action="#{transactionController.create}" value="#{bundle.CreateTransactionSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{transactionController.prepareList}" value="#{bundle.CreateTransactionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateTransactionIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

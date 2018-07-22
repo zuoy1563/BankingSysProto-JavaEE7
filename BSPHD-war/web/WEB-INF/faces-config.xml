@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <application>
+        <resource-bundle>
+            <base-name>/Bundle</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+    </application>
+    
+    <navigation-rule>
+
+    <navigation-case>
+       <from-action>#{transactionController.prepareView}</from-action>
+       <from-outcome>View</from-outcome>
+       <to-view-id>/transaction/View.xhtml</to-view-id>
+       <redirect/>
+    </navigation-case>
+    
+    <navigation-case>
+       <from-action>#{customerController.prepareList}</from-action>
+       <from-outcome>List</from-outcome>
+       <to-view-id>/customer/List.xhtml</to-view-id>
+       <redirect/>
+    </navigation-case>
+    
+    <navigation-case>
+       <from-action>#{transactionController.prepareList}</from-action>
+       <from-outcome>List</from-outcome>
+       <to-view-id>/transaction/List.xhtml</to-view-id>
+       <redirect/>
+    </navigation-case>
+    <navigation-case>
+       <from-action>#{transactionController.prepareCreate}</from-action>
+       <from-outcome>Create</from-outcome>
+       <to-view-id>/transaction/Create.xhtml</to-view-id>
+       <redirect/>
+    </navigation-case>
+    </navigation-rule>
+   
+    
+</faces-config>

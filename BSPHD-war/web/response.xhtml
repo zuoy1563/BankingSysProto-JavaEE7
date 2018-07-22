@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--somehow it works 6:25pm, just cannot refresh, nothing else changes rather than this-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/template.xhtml">
+        <div class="container">
+        <ui:define name="title">
+            <h:outputText value="Login"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:outputText value="Hello, #{userController.customer.firstname}!" rendered="#{userController.isLogin}"/>
+                <h:outputText value="Sorry, your user ID and password do not match, please login again!" rendered="#{!userController.isLogin}"/>
+            </h:form>
+                <br />
+                <br />
+        </ui:define>
+        </div>
+    </ui:composition>
+
+
+</html>

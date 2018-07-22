@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+    </h:head>
+
+    <h:body>
+        <span id="check" value="#{userController.userName}"></span>
+        <span id="auto" onclick="#{userController.refresh(request.getUserPrincipal().getName())}"></span>
+        <script>
+            if (document.getElementById(check).value != ""){
+                document.getElementById(auto).click();
+            }
+        </script>
+        <nav class="navbar navbar-default info">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <h:link class="navbar-brand" outcome="/index" value="Banking System Prototype" />
+                </div>
+                <h:form>
+                <ul class="nav navbar-nav">
+                    <li><h:commandLink action="#{transactionController.prepareList}" value="Search Transactions" immediate="true" /></li>
+                    <li><h:commandLink action="#{transactionController.prepareCreate}" value="Create a Transaction" immediate="true" /></li>
+                    <li><h:commandLink action="#{customerController.prepareList}" value="View Users" immediate="true" rendered="#{userController.customer.type.equals(customerController.types[1])}" /></li>
+                </ul>
+                </h:form>
+                <ul class="nav navbar-right navbar-nav">
+                    <li><h:link class="glyphicon glyphicon-log-in" outcome="/login" value="&nbsp;Login" rendered="#{!userController.isLogin}" /></li>
+                    <li><h:link class="glyphicon glyphicon-user text-capitalize" outcome="/login" value="&nbsp;#{userController.customer.firstname}" rendered="#{userController.isLogin}"/></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <h1>
+                <ui:insert name="title">Default Title</ui:insert>
+            </h1>
+            <p>
+                <ui:insert name="body">Default Body</ui:insert>
+            </p>
+        </div>
+        <div class="container body-content">
+            <hr />
+            <footer>
+                <p>This project is created by Yue Zuo</p>
+            </footer>
+        </div>
+    </h:body>
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditTransactionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditTransactionLabel_no}" for="no" />
+                    <h:inputText id="no" value="#{transactionController.selected.no}" title="#{bundle.EditTransactionTitle_no}" />
+                    <h:outputLabel value="#{bundle.EditTransactionLabel_amount}" for="amount" />
+                    <h:inputText id="amount" value="#{transactionController.selected.amount}" title="#{bundle.EditTransactionTitle_amount}" />
+                    <h:outputLabel value="#{bundle.EditTransactionLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{transactionController.selected.name}" title="#{bundle.EditTransactionTitle_name}" />
+                    <h:outputLabel value="#{bundle.EditTransactionLabel_account}" for="account" />
+                    <h:selectOneMenu id="account" value="#{transactionController.selected.account}" title="#{bundle.EditTransactionTitle_account}" >
+                        <f:selectItems value="#{accountController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditTransactionLabel_type}" for="type" />
+                    <h:inputText id="type" value="#{transactionController.selected.type}" title="#{bundle.EditTransactionTitle_type}" />
+                </h:panelGrid>
+                <h:commandLink action="#{transactionController.update}" value="#{bundle.EditTransactionSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditTransactionViewLink}"/>
+                <br />
+                <h:commandLink action="#{transactionController.prepareList}" value="#{bundle.EditTransactionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditTransactionIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
